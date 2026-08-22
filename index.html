@@ -108,7 +108,7 @@
         <!-- Control Panel -->
         <aside class="w-full md:w-[420px] bg-slate-950 flex flex-col flex-1 overflow-hidden z-20">
             <!-- Tabs -->
-            <div class="grid grid-cols-4 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
+            <div class="grid grid-cols-3 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
                 <button onclick="switchTab('content')" id="tabBtn-content" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-active">
                     <span class="text-base">📝</span>
                     <span>Quote</span>
@@ -120,10 +120,6 @@
                 <button onclick="switchTab('meta')" id="tabBtn-meta" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-inactive">
                     <span class="text-base">⚙️</span>
                     <span>Header</span>
-                </button>
-                <button onclick="switchTab('support')" id="tabBtn-support" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-inactive">
-                    <span class="text-base">❤️</span>
-                    <span>Support</span>
                 </button>
             </div>
 
@@ -265,56 +261,6 @@
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <span class="font-semibold text-slate-300 block">Bottom Signature</span>
                         <input type="text" id="footerText" oninput="updatePost()" placeholder="@username // your-website.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
-                    </div>
-                </div>
-
-                <!-- TAB 4: SUPPORT -->
-                <div id="tab-support" class="tab-content space-y-3 hidden">
-                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
-                        <div class="flex items-center gap-2 text-indigo-400">
-                            <span class="text-xl">❤️</span>
-                            <span class="font-semibold text-sm">Support the Creator</span>
-                        </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">
-                            If you find this tool useful, consider supporting my work. Every contribution helps me build more creative tools!
-                        </p>
-                        
-                        <div class="space-y-2.5 pt-1">
-                            <a href="https://cash.app/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-green-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="text-lg">💰</span>
-                                    <span class="font-medium text-sm text-white">CashApp</span>
-                                </div>
-                                <span class="text-xs text-green-400 font-mono">$yourhandle</span>
-                            </a>
-                            <a href="https://www.chime.com/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="text-lg">🏦</span>
-                                    <span class="font-medium text-sm text-white">Chime</span>
-                                </div>
-                                <span class="text-xs text-blue-400 font-mono">$yourhandle</span>
-                            </a>
-                            <a href="https://venmo.com/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-400/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="text-lg">💳</span>
-                                    <span class="font-medium text-sm text-white">Venmo</span>
-                                </div>
-                                <span class="text-xs text-blue-300 font-mono">@yourhandle</span>
-                            </a>
-                        </div>
-                        <div class="mt-2 pt-2 border-t border-slate-800/60 text-[10px] text-slate-500 text-center">
-                            All support is greatly appreciated 🙏
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-2 text-xs">
-                        <span class="font-semibold text-slate-300 block">About This Tool</span>
-                        <p class="text-slate-400 leading-relaxed">
-                            OmniPost Balanced Scale creates 9:16 quote images optimized for social media. 
-                            Built with ❤️ by John Ogletree.
-                        </p>
-                        <a href="https://john-ogletree.github.io" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 text-[10px] transition-colors block">
-                            🌐 john-ogletree.github.io
-                        </a>
                     </div>
                 </div>
             </div>
@@ -636,7 +582,7 @@
                 document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById(`tab-${tabName}`).classList.remove('hidden');
 
-                ['content', 'templates', 'meta', 'support'].forEach(id => {
+                ['content', 'templates', 'meta'].forEach(id => {
                     const btn = document.getElementById(`tabBtn-${id}`);
                     if (id === tabName) {
                         btn.className = "py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-active";
