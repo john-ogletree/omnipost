@@ -108,7 +108,7 @@
         <!-- Control Panel -->
         <aside class="w-full md:w-[420px] bg-slate-950 flex flex-col flex-1 overflow-hidden z-20">
             <!-- Tabs -->
-            <div class="grid grid-cols-5 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
+            <div class="grid grid-cols-4 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
                 <button onclick="switchTab('content')" id="tabBtn-content" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-active">
                     <span class="text-base">📝</span>
                     <span>Quote</span>
@@ -120,10 +120,6 @@
                 <button onclick="switchTab('meta')" id="tabBtn-meta" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-inactive">
                     <span class="text-base">⚙️</span>
                     <span>Header</span>
-                </button>
-                <button onclick="switchTab('watermark')" id="tabBtn-watermark" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-inactive">
-                    <span class="text-base">🏷️</span>
-                    <span>Watermark</span>
                 </button>
                 <button onclick="switchTab('support')" id="tabBtn-support" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-inactive">
                     <span class="text-base">❤️</span>
@@ -272,66 +268,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: WATERMARK -->
-                <div id="tab-watermark" class="tab-content space-y-3 hidden">
-                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold text-slate-300 flex items-center gap-1.5">
-                                <span class="text-base">🏷️</span> Watermark Settings
-                            </span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="watermarkEnabled" onchange="updatePost()" checked class="sr-only peer">
-                                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-                                <span class="ml-2 text-[10px] text-slate-400">Enabled</span>
-                            </label>
-                        </div>
-                        
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Watermark Text</label>
-                            <input type="text" id="watermarkText" oninput="updatePost()" placeholder="© Your Brand" value="© OmniPost" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white text-xs">
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Font Size</label>
-                                <input type="number" id="watermarkSize" oninput="updatePost()" value="28" min="12" max="80" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white text-xs">
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Opacity</label>
-                                <input type="range" id="watermarkOpacity" oninput="updatePost()" value="40" min="5" max="100" class="w-full mt-1">
-                                <span id="opacityDisplay" class="text-[10px] text-slate-400 block text-center mt-0.5">40%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Text Color</label>
-                                <input type="color" id="watermarkColor" onchange="updatePost()" value="#ffffff" class="w-8 h-8 bg-transparent cursor-pointer">
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Position</label>
-                                <select id="watermarkPosition" onchange="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white text-xs">
-                                    <option value="bottom-right">Bottom Right</option>
-                                    <option value="bottom-left">Bottom Left</option>
-                                    <option value="top-right">Top Right</option>
-                                    <option value="top-left">Top Left</option>
-                                    <option value="center">Center</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">X Offset (px)</label>
-                            <input type="number" id="watermarkXOffset" oninput="updatePost()" value="30" min="0" max="500" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white text-xs">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Y Offset (px)</label>
-                            <input type="number" id="watermarkYOffset" oninput="updatePost()" value="30" min="0" max="500" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white text-xs">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 5: SUPPORT -->
+                <!-- TAB 4: SUPPORT -->
                 <div id="tab-support" class="tab-content space-y-3 hidden">
                     <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-indigo-400">
@@ -396,16 +333,7 @@
                 tagDate: "",
                 tagYear: "",
                 tagHandle: "",
-                footerText: "",
-                // Watermark settings - enabled by default
-                watermarkEnabled: true,
-                watermarkText: "© OmniPost",
-                watermarkSize: 28,
-                watermarkOpacity: 40,
-                watermarkColor: "#ffffff",
-                watermarkPosition: "bottom-right",
-                watermarkXOffset: 30,
-                watermarkYOffset: 30
+                footerText: ""
             };
 
             const canvas = document.getElementById('postCanvas');
@@ -582,62 +510,6 @@
                 ctx.restore();
             }
 
-            // ============ WATERMARK RENDER ============
-            function drawWatermark(ctx, w, h) {
-                if (!state.watermarkEnabled) return;
-                
-                const text = state.watermarkText || '© OmniPost';
-                const size = parseInt(state.watermarkSize) || 28;
-                const opacity = (parseInt(state.watermarkOpacity) || 40) / 100;
-                const color = state.watermarkColor || '#ffffff';
-                const position = state.watermarkPosition || 'bottom-right';
-                const xOffset = parseInt(state.watermarkXOffset) || 30;
-                const yOffset = parseInt(state.watermarkYOffset) || 30;
-
-                ctx.save();
-                ctx.globalAlpha = opacity;
-                ctx.font = `${size}px system-ui, -apple-system, sans-serif`;
-                ctx.fillStyle = color;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                const metrics = ctx.measureText(text);
-                const textWidth = metrics.width;
-                const textHeight = size;
-
-                let x, y;
-                const padding = 30;
-
-                switch(position) {
-                    case 'bottom-right':
-                        x = w - padding - xOffset;
-                        y = h - padding - yOffset;
-                        break;
-                    case 'bottom-left':
-                        x = padding + xOffset;
-                        y = h - padding - yOffset;
-                        break;
-                    case 'top-right':
-                        x = w - padding - xOffset;
-                        y = padding + yOffset;
-                        break;
-                    case 'top-left':
-                        x = padding + xOffset;
-                        y = padding + yOffset;
-                        break;
-                    case 'center':
-                        x = w / 2 + xOffset;
-                        y = h / 2 + yOffset;
-                        break;
-                    default:
-                        x = w - padding - xOffset;
-                        y = h - padding - yOffset;
-                }
-
-                ctx.fillText(text, x, y);
-                ctx.restore();
-            }
-
             // ============ MAIN UPDATE ============
             window.updatePost = function() {
                 state.quoteText = document.getElementById('quoteText').value;
@@ -650,19 +522,6 @@
                 state.tagYear = document.getElementById('tagYear').value;
                 state.tagHandle = document.getElementById('tagHandle').value;
                 state.footerText = document.getElementById('footerText').value;
-                
-                // Watermark
-                state.watermarkEnabled = document.getElementById('watermarkEnabled').checked;
-                state.watermarkText = document.getElementById('watermarkText').value;
-                state.watermarkSize = document.getElementById('watermarkSize').value;
-                state.watermarkOpacity = document.getElementById('watermarkOpacity').value;
-                state.watermarkColor = document.getElementById('watermarkColor').value;
-                state.watermarkPosition = document.getElementById('watermarkPosition').value;
-                state.watermarkXOffset = document.getElementById('watermarkXOffset').value;
-                state.watermarkYOffset = document.getElementById('watermarkYOffset').value;
-
-                // Update opacity display
-                document.getElementById('opacityDisplay').textContent = state.watermarkOpacity + '%';
 
                 const w = 1080, h = 1920;
                 canvas.width = w; canvas.height = h;
@@ -746,9 +605,6 @@
                 ctx.textBaseline = 'middle';
                 ctx.fillText(state.footerText || '@username // your-website.com', w / 2, cardY + cardH + 110);
                 ctx.restore();
-
-                // Draw watermark on top of everything
-                drawWatermark(ctx, w, h);
             };
 
             // ============ LIVE DATE/TIME ============
@@ -780,7 +636,7 @@
                 document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById(`tab-${tabName}`).classList.remove('hidden');
 
-                ['content', 'templates', 'meta', 'watermark', 'support'].forEach(id => {
+                ['content', 'templates', 'meta', 'support'].forEach(id => {
                     const btn = document.getElementById(`tabBtn-${id}`);
                     if (id === tabName) {
                         btn.className = "py-2.5 rounded-lg flex items-center justify-center gap-1.5 tab-btn-active";
@@ -802,8 +658,6 @@
 
             // ============ INIT ============
             window.addEventListener('DOMContentLoaded', () => {
-                // Ensure watermark checkbox matches default state
-                document.getElementById('watermarkEnabled').checked = true;
                 updatePost();
             });
         })();
