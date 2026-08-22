@@ -218,27 +218,23 @@
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Day Tag (JS Auto)</label>
-                                <input type="text" id="tagDay" oninput="updatePost()" placeholder="DAY 001" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
-                            </div>
-                            <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Progress % (JS Auto)</label>
                                 <input type="text" id="tagProgress" oninput="updatePost()" placeholder="0%" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 pt-1">
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Date (JS Auto)</label>
                                 <input type="text" id="tagDate" oninput="updatePost()" placeholder="DD.MM.YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Year (JS Auto)</label>
                                 <input type="text" id="tagYear" oninput="updatePost()" placeholder="YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
-                        </div>
-                        <div class="pt-1">
-                            <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
-                            <input type="text" id="tagHandle" oninput="updatePost()" placeholder="@username" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            <div>
+                                <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
+                                <input type="text" id="tagHandle" oninput="updatePost()" placeholder="@username" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            </div>
                         </div>
                     </div>
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
@@ -308,7 +304,6 @@
                 cardBgColor: "#0d111c",
                 textColor: "#ffffff",
                 accentColor: "#2563eb",
-                tagDay: "",
                 tagProgress: "",
                 tagDate: "",
                 tagYear: "",
@@ -464,18 +459,15 @@
                 ctx.font = '700 20px system-ui, -apple-system, sans-serif';
                 const pillH = 56;
 
-                drawRoundedRect(ctx, cardX, y, 130, pillH, 16, '#0f172a');
+                // Removed Day tag - now showing Progress, Year, Handle
+                drawRoundedRect(ctx, cardX, y, 90, pillH, 16, '#0f172a');
                 ctx.fillStyle = '#94a3b8';
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                ctx.fillText(state.tagDay || 'DAY 000', cardX + 65, y + pillH/2);
+                ctx.fillText(state.tagProgress || '0%', cardX + 45, y + pillH/2);
 
-                drawRoundedRect(ctx, cardX + 140, y, 90, pillH, 16, '#0f172a');
+                drawRoundedRect(ctx, cardX + 100, y, 95, pillH, 16, '#0f172a');
                 ctx.fillStyle = '#94a3b8';
-                ctx.fillText(state.tagProgress || '0%', cardX + 140 + 45, y + pillH/2);
-
-                drawRoundedRect(ctx, cardX + 240, y, 95, pillH, 16, '#0f172a');
-                ctx.fillStyle = '#94a3b8';
-                ctx.fillText(state.tagYear || 'YYYY', cardX + 240 + 47, y + pillH/2);
+                ctx.fillText(state.tagYear || 'YYYY', cardX + 100 + 47, y + pillH/2);
 
                 const handleText = state.tagHandle || '@username';
                 const handleW = Math.max(160, ctx.measureText(handleText).width + 30);
@@ -501,7 +493,6 @@
                 state.cardBgColor = document.getElementById('cardBgColor').value;
                 state.textColor = document.getElementById('textColor').value;
                 state.accentColor = document.getElementById('accentColor').value;
-                state.tagDay = document.getElementById('tagDay').value;
                 state.tagProgress = document.getElementById('tagProgress').value;
                 state.tagDate = document.getElementById('tagDate').value;
                 state.tagYear = document.getElementById('tagYear').value;
@@ -609,7 +600,6 @@
                 const formattedDate = `${dd}.${mm}.${year}`;
                 const dayString = `DAY ${String(dayOfYear).padStart(3, '0')}`;
 
-                document.getElementById('tagDay').value = dayString;
                 document.getElementById('tagProgress').value = progressPercent;
                 document.getElementById('tagDate').value = formattedDate;
                 document.getElementById('tagYear').value = year;
