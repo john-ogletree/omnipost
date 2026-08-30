@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OmniPost - Community Templates</title>
+    <title>OmniPost · Community Templates</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -42,6 +42,13 @@
         ::placeholder {
             color: #475569;
             opacity: 0.6;
+        }
+        .toast-message {
+            animation: fadeSlide 0.25s ease-out;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translate(-50%, 20px); }
+            100% { opacity: 1; transform: translate(-50%, 0); }
         }
     </style>
 </head>
@@ -186,31 +193,21 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: META -->
+                <!-- TAB 3: META (simplified: only Date & Handle) -->
                 <div id="tab-meta" class="tab-content space-y-3 hidden">
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <div class="flex items-center justify-between">
                             <span class="font-semibold text-indigo-400 flex items-center gap-1.5">
-                                <span class="text-base">⚡</span> Automated JS Controls
+                                <span class="text-base">⚡</span> Header Controls
                             </span>
                             <button onclick="loadLiveDateTime()" class="text-[10px] bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 px-2.5 py-1 rounded-md font-medium transition-colors">
-                                Sync with Today
+                                Sync Date
                             </button>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Progress % (JS Auto)</label>
-                                <input type="text" id="tagProgress" oninput="updatePost()" placeholder="0%" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Date (JS Auto)</label>
+                                <label class="text-[10px] text-slate-400 block mb-1">Date (DD.MM.YYYY)</label>
                                 <input type="text" id="tagDate" oninput="updatePost()" placeholder="DD.MM.YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 pt-1">
-                            <div>
-                                <label class="text-[10px] text-slate-400 block mb-1">Year (JS Auto)</label>
-                                <input type="text" id="tagYear" oninput="updatePost()" placeholder="YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
@@ -235,9 +232,7 @@
                 cardBgColor: "#0d111c",
                 textColor: "#ffffff",
                 accentColor: "#2563eb",
-                tagProgress: "",
                 tagDate: "",
-                tagYear: "",
                 tagHandle: "",
                 footerText: ""
             };
@@ -390,25 +385,18 @@
                 ctx.font = '700 20px system-ui, -apple-system, sans-serif';
                 const pillH = 56;
 
-                drawRoundedRect(ctx, cardX, y, 90, pillH, 16, '#0f172a');
-                ctx.fillStyle = '#94a3b8';
-                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                ctx.fillText(state.tagProgress || '0%', cardX + 45, y + pillH/2);
-
-                drawRoundedRect(ctx, cardX + 100, y, 95, pillH, 16, '#0f172a');
-                ctx.fillStyle = '#94a3b8';
-                ctx.fillText(state.tagYear || 'YYYY', cardX + 100 + 47, y + pillH/2);
-
-                const handleText = state.tagHandle || '@username';
-                const handleW = Math.max(160, ctx.measureText(handleText).width + 30);
-                const dateW = 150;
-                const handleX = cardX + cardW - handleW;
-                const dateX = handleX - dateW - 12;
-
-                drawRoundedRect(ctx, dateX, y, dateW, pillH, 16, state.accentColor);
+                // Date pill (left)
+                const dateText = state.tagDate || 'DD.MM.YYYY';
+                const dateW = 160;
+                drawRoundedRect(ctx, cardX, y, dateW, pillH, 16, state.accentColor);
                 ctx.fillStyle = '#ffffff';
-                ctx.fillText(state.tagDate || 'DD.MM.YYYY', dateX + dateW/2, y + pillH/2);
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(dateText, cardX + dateW/2, y + pillH/2);
 
+                // Handle pill (right)
+                const handleText = state.tagHandle || '@username';
+                const handleW = Math.max(140, ctx.measureText(handleText).width + 30);
+                const handleX = cardX + cardW - handleW;
                 drawRoundedRect(ctx, handleX, y, handleW, pillH, 16, state.accentColor);
                 ctx.fillStyle = '#ffffff';
                 ctx.fillText(handleText, handleX + handleW/2, y + pillH/2);
@@ -423,9 +411,7 @@
                 state.cardBgColor = document.getElementById('cardBgColor').value;
                 state.textColor = document.getElementById('textColor').value;
                 state.accentColor = document.getElementById('accentColor').value;
-                state.tagProgress = document.getElementById('tagProgress').value;
                 state.tagDate = document.getElementById('tagDate').value;
-                state.tagYear = document.getElementById('tagYear').value;
                 state.tagHandle = document.getElementById('tagHandle').value;
                 state.footerText = document.getElementById('footerText').value;
 
@@ -513,28 +499,17 @@
                 ctx.restore();
             };
 
-            // ============ LIVE DATE/TIME ============
+            // ============ LIVE DATE/TIME (sync only date) ============
             window.loadLiveDateTime = function() {
                 const now = new Date();
                 const year = now.getFullYear();
-                const start = new Date(year, 0, 0);
-                const diff = now - start;
-                const oneDay = 1000 * 60 * 60 * 24;
-                const dayOfYear = Math.floor(diff / oneDay);
-                const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-                const totalDays = isLeap ? 366 : 365;
-                const progressPercent = Math.round((dayOfYear / totalDays) * 100) + '%';
-
                 const dd = String(now.getDate()).padStart(2, '0');
                 const mm = String(now.getMonth() + 1).padStart(2, '0');
                 const formattedDate = `${dd}.${mm}.${year}`;
 
-                document.getElementById('tagProgress').value = progressPercent;
                 document.getElementById('tagDate').value = formattedDate;
-                document.getElementById('tagYear').value = year;
-
                 updatePost();
-                showToast('📅 Synced with today!');
+                showToast('📅 Date synced with today!');
             };
 
             // ============ TAB SWITCHING ============
